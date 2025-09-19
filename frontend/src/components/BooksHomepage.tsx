@@ -16,12 +16,14 @@ const BooksHomepage = () => {
     const [totalPages, setTotalPages] = useState<number>(0);
     const [searchTimeout, setSearchTimeout] = useState(null);
 
+    const baseURL = process.env.REACT_APP_GET_BOOKS_API_URL;
+
     const fetchBooks = async (page = 1, search = '') => {
         setLoading(true);
         setError(null);
 
         try {
-            let localURL = `http://localhost:5000/api/books/?page=${page}`;
+            let localURL = `${baseURL}/api/books/?page=${page}`;
 
             if (search.trim()) {
                 localURL += `&search=${encodeURIComponent(search.trim())}`;
@@ -124,7 +126,7 @@ const BooksHomepage = () => {
                     onPageChange={handlePageChange}
                 />
             </main>
-            
+
             <footer className="bg-white border-t mt-12">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <p className="text-center text-gray-600 text-sm">
