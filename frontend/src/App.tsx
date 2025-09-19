@@ -1,17 +1,26 @@
-import BookDetail from './components/BookDetail';
-import BooksHomepage from './components/BooksHomepage'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
+
+const BooksHomepage = lazy(() => import("./components/BooksHomepage"));
+const BookDetail = lazy(() => import("./components/BookDetail"));
 
 function App() {
-
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<BooksHomepage />} />
-        <Route path="/book/:id" element={<BookDetail />} />
-      </Routes>
+      <Suspense
+        fallback={
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        }
+      >
+        <Routes>
+          <Route path="/" element={<BooksHomepage />} />
+          <Route path="/book/:id" element={<BookDetail />} />
+        </Routes>
+      </Suspense>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

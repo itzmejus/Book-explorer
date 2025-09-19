@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Flame } from 'lucide-react';
 import Header from './Header';
 import SearchBooks from './SearchBooks';
 import BookCard from './BookCard.tsx';
@@ -13,6 +13,9 @@ const BooksHomepage = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [totalPages, setTotalPages] = useState<number>(0);
+    const [popularBooks, setPopularBooks] = useState<any[]>([]);
+    const [showPopular, setShowPopular] = useState<boolean>(false);
+    const [popularLoading, setPopularLoading] = useState<boolean>(false);
 
     const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -41,6 +44,29 @@ const BooksHomepage = () => {
             setError(err.message);
         } finally {
             setLoading(false);
+        }
+    }, [baseURL]);
+
+    const fetchPopularBooks = useCallback(async () => {
+        setPopularLoading(true);
+        try {
+            const requests = [1, 2, 3, 4, 5].map((p) =>
+                fetch(`${baseURL}/api/books/?page=${p}`).then((res) => res.json())
+            );
+
+            const results = await Promise.all(requests);
+            const allBooks = results.flatMap((r) => r.results);
+
+            const topBooks = allBooks
+                .sort((a, b) => b.download_count - a.download_count)
+                .slice(0, 10);
+
+            setPopularBooks(topBooks);
+            setShowPopular(true);
+        } catch (err) {
+            console.error("Error fetching popular books:", err);
+        } finally {
+            setPopularLoading(false);
         }
     }, [baseURL]);
 
@@ -114,6 +140,28 @@ const BooksHomepage = () => {
             <SearchBooks searchTerm={searchTerm} handleSearch={handleSearch} />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                {!showPopular && (
+                    <div className="text-center mb-8">
+                        <button
+                            onClick={fetchPopularBooks}
+                            disabled={popularLoading}
+                            className="inline-flex items-center px-6 py-3 bg-gray-300 text-grey-900 font-medium rounded-lg shadow hover:bg-grey-200 disabled:opacity-50"
+                        >
+                            <Flame className="h-5 w-5 mr-2" />
+                            {popularLoading ? "Loading..." : "Show Most Popular Books"}
+                        </button>
+                    </div>
+                )}
+                {showPopular && popularBooks.length > 0 && (
+                    <section className="mb-12">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-6">🔥 Most Popular Books</h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                            {popularBooks.map((book) => (
+                                <BookCard key={book?.id} book={book} />
+                            ))}
+                        </div>
+                    </section>
+                )}
                 {error && errorState}
 
                 {books.length === 0 && !loading && emptyState}

@@ -44,6 +44,7 @@ const BookDetail = () => {
                                     <img
                                         src={book?.formats["image/jpeg"]}
                                         alt={book?.title}
+                                        loading="lazy"
                                         className="w-48 h-64 sm:w-56 sm:h-72 object-contain rounded-lg shadow-xl border-1 border-white/20"
                                     />
                                 </div>

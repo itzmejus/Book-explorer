@@ -35,6 +35,7 @@ const BookCard = ({ book }: any) => {
                     <img
                         src={getBookCover(book)}
                         alt={book?.title}
+                        loading="lazy"
                         className="w-full h-48 object-contain"
                     />
                 </div>
