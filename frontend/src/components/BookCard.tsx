@@ -1,20 +1,6 @@
 import { Download, Globe, Users } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
-
-interface bookType {
-    authors: string[];
-    bookshelves: string[];
-    copyright: boolean;
-    download_count: number;
-    formats: string | any;
-    id: string | number;
-    languages: string[];
-    media_type: string;
-    subjects: string[];
-    summaries: string[];
-    title: string;
-    translators: string[]
-}
+import type { bookType } from '../types/type';
 
 const BookCard = ({ book }: any) => {
     const navigate = useNavigate();

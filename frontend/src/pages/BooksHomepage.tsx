@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { BookOpen, Flame } from 'lucide-react';
-import Header from './Header';
-import SearchBooks from './SearchBooks';
-import BookCard from './BookCard.tsx';
-import Pagination from './Pagination.tsx';
+import Header from '../components/Header.tsx';
+import SearchBooks from '../components/SearchBooks.tsx';
+import BookCard from '../components/BookCard.tsx';
+import Pagination from '../components/Pagination.tsx';
 import BooksSkeleton from '../Common/BooksSkeleton.tsx';
 
 const BooksHomepage = () => {

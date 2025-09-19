@@ -1,11 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React from 'react'
-
-interface PaginationProps {
-    currentPage: number | string | any;
-    totalPages: number | string | any;
-    onPageChange: (value: any) => void;
-}
+import type { PaginationProps } from '../types/type';
 
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
     if (totalPages <= 1) return null;

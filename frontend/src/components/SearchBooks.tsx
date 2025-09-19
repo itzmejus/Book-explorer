@@ -1,9 +1,5 @@
 import React from 'react'
-
-interface SearchBooksProps {
-    searchTerm: string;
-    handleSearch: (value: string) => void;
-}
+import type { SearchBooksProps } from '../types/type'
 
 const SearchBooks: React.FC<SearchBooksProps> = ({ searchTerm, handleSearch }) => {
     return (

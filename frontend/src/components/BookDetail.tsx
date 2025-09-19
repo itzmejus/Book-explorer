@@ -5,7 +5,7 @@ import SingleBookSkeleton from "../Common/SingleBookSkeleton";
 const BookDetail = () => {
     const { id } = useParams<{ id: string }>();
     const [book, setBook] = useState<any>(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const baseURL = useMemo(() => "https://book-explorer-backend-zx8h.onrender.com", []);
 

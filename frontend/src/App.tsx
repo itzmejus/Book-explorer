@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 
-const BooksHomepage = lazy(() => import("./components/BooksHomepage"));
+const BooksHomepage = lazy(() => import("./pages/BooksHomepage"));
 const BookDetail = lazy(() => import("./components/BookDetail"));
 
 function App() {
