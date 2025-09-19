@@ -37,6 +37,24 @@ app.get('/api/books', async (req, res) => {
     }
 });
 
+//  Get book by ID
+app.get('/api/books/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const gutendxUrl = `${GUTENDEX_BASE_URL}/${id}`;
+        const response = await axios.get(gutendxUrl);
+
+        res.json(response.data);
+
+    } catch (error) {
+        console.error('Error fetching book by ID:', error.message);
+        res.status(500).json({
+            error: 'Failed to fetch book by ID'
+        });
+    }
+});
+
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
