@@ -5,6 +5,7 @@ import SearchBooks from '../components/SearchBooks.tsx';
 import BookCard from '../components/BookCard.tsx';
 import Pagination from '../components/Pagination.tsx';
 import BooksSkeleton from '../Common/BooksSkeleton.tsx';
+import Footer from '../components/Footer.tsx';
 
 const BooksHomepage = () => {
     const [books, setBooks] = useState<any[]>([]);
@@ -139,25 +140,38 @@ const BooksHomepage = () => {
 
             <SearchBooks searchTerm={searchTerm} handleSearch={handleSearch} />
 
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
                 {!showPopular && (
                     <div className="text-center mb-8">
                         <button
                             onClick={fetchPopularBooks}
                             disabled={popularLoading}
-                            className="inline-flex items-center px-6 py-3 bg-gray-300 text-grey-900 font-medium rounded-lg shadow hover:bg-grey-200 disabled:opacity-50"
+                            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-500 to-red-600 text-white font-semibold rounded-lg shadow-lg hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:hover:scale-100"
                         >
                             <Flame className="h-5 w-5 mr-2" />
                             {popularLoading ? "Loading..." : "Show Most Popular Books"}
                         </button>
                     </div>
                 )}
+
                 {showPopular && popularBooks.length > 0 && (
-                    <section className="mb-12">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6">🔥 Most Popular Books</h2>
+                    <section className="mb-16">
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+                                🔥 Most Popular Books
+                            </h2>
+                            <span className="text-sm text-gray-500">
+                                Top 10 aggregated by download count
+                            </span>
+                        </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                             {popularBooks.map((book) => (
-                                <BookCard key={book?.id} book={book} />
+                                <div
+                                    key={book?.id}
+                                    className="transform hover:scale-105 transition-all duration-200"
+                                >
+                                    <BookCard book={book} />
+                                </div>
                             ))}
                         </div>
                     </section>
@@ -169,11 +183,21 @@ const BooksHomepage = () => {
                 {loading && books.length === 0 && skeletonGrid}
 
                 {books.length > 0 && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {books.map((book) => (
-                            <BookCard key={book.id} book={book} />
-                        ))}
-                    </div>
+                    <section className="mt-12">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-6">
+                            📚 Explore Books
+                        </h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                            {books.map((book) => (
+                                <div
+                                    key={book.id}
+                                    className="transform hover:scale-105 transition-all duration-200"
+                                >
+                                    <BookCard book={book} />
+                                </div>
+                            ))}
+                        </div>
+                    </section>
                 )}
 
                 {loading && books.length > 0 && skeletonGrid}
@@ -187,13 +211,7 @@ const BooksHomepage = () => {
                 )}
             </main>
 
-            <footer className="bg-white border-t mt-12">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                    <p className="text-center text-gray-600 text-sm">
-                        Developed by <a className="text-blue-600 hover:text-blue-800">Justin Johnson</a>
-                    </p>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 };
