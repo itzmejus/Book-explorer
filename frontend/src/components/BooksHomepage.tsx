@@ -16,7 +16,7 @@ const BooksHomepage = () => {
     const [totalPages, setTotalPages] = useState<number>(0);
     const [searchTimeout, setSearchTimeout] = useState(null);
 
-    const baseURL = process.env.REACT_APP_GET_BOOKS_API_URL;
+    const baseURL = "https://book-explorer-backend-zx8h.onrender.com";
 
     const fetchBooks = async (page = 1, search = '') => {
         setLoading(true);
