@@ -10,6 +10,10 @@ const GUTENDEX_BASE_URL = 'https://gutendex.com/books';
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+    res.send("Backend is running")
+})
+
 // Get books with pagination and search
 app.get('/api/books', async (req, res) => {
     try {
