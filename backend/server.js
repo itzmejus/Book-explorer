@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const GUTENDEX_BASE_URL = 'https://gutendex.com/books';
+const baseURL = process.env.GET_BOOKS_API_URL || 'https://gutendex.com/books';
 
 // Middleware
 app.use(cors());
@@ -19,7 +19,7 @@ app.get('/api/books', async (req, res) => {
     try {
         const { page = 1, search = '' } = req.query;
 
-        let gutendxUrl = `${GUTENDEX_BASE_URL}?page=${page}`;
+        let gutendxUrl = `${baseURL}?page=${page}`;
         if (search) {
             gutendxUrl += `&search=${encodeURIComponent(search)}`;
         }
